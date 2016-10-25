@@ -1,0 +1,16 @@
+[Unit]
+Description=Janus WebRTC gateway
+After=network.target
+
+[Service]
+User=pi
+Type=simple
+ExecStart=/usr/local/bin/janus -o
+LimitNOFILE=65536
+Restart=always
+KillSignal=SIGTERM
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+

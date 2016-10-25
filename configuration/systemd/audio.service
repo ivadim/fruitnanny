@@ -1,0 +1,16 @@
+[Unit]
+Description=FruitNanny audio service
+After=network.target
+
+[Service]
+User=pi
+Type=simple
+ExecStart=/opt/fruitnanny/bin/audio.sh
+LimitNOFILE=65536
+Restart=always
+KillSignal=SIGTERM
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+
