@@ -1,6 +1,6 @@
 
 //var server = "https://192.168.1.50:8089/janus";
-var server = "https://" + window.location.hostname + ":8089/janus";
+var server = "/janus";
 
 var janus = null;
 var streaming = null;
