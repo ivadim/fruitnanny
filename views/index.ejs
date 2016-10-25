@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ./partials/head %>
+  <script type="text/javascript">
+    $(document).ready(function() {
+        DHT.init();
+        VideoPlayer.init();
+    });
+    
+</script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+  <div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+      <% include ./partials/header %>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <% include ./partials/sidebar %>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Dashboard
+        </h1>
+
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <div class="col-md-6">
+            
+            <figure id="videoContainer" data-fullscreen="false">
+              <video id="video" autoplay muted> 
+                <!--source src="public/small.mp4" type="video/mp4"-->
+              </video>
+              <div id="fullscreen-info" class="fs-info">
+                <div id="fs-temperature" ></div>
+                <div id="fs-humidity" ></div>
+                <div id="fs-audiolevel"></div>
+              </div>
+              
+              <!--div id="temperature" class="test"></div-->
+              <div id="video-controls" class="controls" data-state="hidden">
+                <button id="playpause" type="button" data-state="play">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                </button>
+                <button id="light" type="button" data-state="on">
+                  <i class="fa fa-lightbulb-o"></i>
+                </button>
+                <div class="empty">&nbsp;</div>
+                <button id="mute" type="button" data-state="mute">
+                  <i class="fa fa-volume-up" aria-hidden="true"></i>
+                </button>
+                <div class="sliderdiv">
+                  <input id="volume_slider" type="text" ></input>
+                </div>
+                <button id="fs" type="button" data-state="go-fullscreen">
+                  <i class="fa fa-arrows-alt" aria-hidden="true"></i>
+                </button>
+              </div>
+            </figure>
+            <div id="spinner"> </div>
+          </div>
+          <div>
+          
+          <div class="col-md-6">
+            <div class="row">
+              <div class="col-md-12">
+                <canvas id="audiolevel"></canvas>
+              </div>
+            </div>
+
+            <div class="row">
+              <div id="temperature" class="col-md-5"></div>
+              <div id="humidity" class="col-md-5"></div>
+            </div>
+          </div>
+          
+          
+          </div>
+
+        </div>
+    </div>
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <% include ./partials/footer %>
+  
+
+  </div>
+  <!-- ./wrapper -->
+
+  <% include ./partials/js %>
+
+
+</body>
+
+</html>

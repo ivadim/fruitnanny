@@ -1,0 +1,16 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "no-reference": false,
+    "no-console": [
+        false
+    ],
+    "interface-name": false,
+    "max-line-length": [true, 140],
+    "member-ordering": [true,
+      "public-before-private",
+      "static-before-instance",
+      "variables-before-functions"
+    ]
+  }
+}

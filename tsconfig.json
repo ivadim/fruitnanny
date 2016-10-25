@@ -1,0 +1,10 @@
+{
+    "compileOnSave": true,
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "watch": true,
+        "moduleResolution": "node",
+        "sourceMap": false
+    }
+}
