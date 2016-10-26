@@ -1,12 +1,15 @@
 "use strict";
 const express = require("express");
+let exec = require('child_process').exec;
 let router = express.Router();
 router.get("/current", (req, res, next) => {
-    console.log("On");
-    let temp = Math.random() * (30 - 10) + 10;
-    let hum = Math.random() * 100;
-    let result = { humidity: hum, temperature: temp };
-    res.json(result);
+    exec("bin/dht22.py", function(err, stdout, stderr){
+        let values = stdout.split(" "); 
+        let t = values[0];
+        let h = values[1];
+        let result = { humidity: h, temperature: t };
+        res.json(result);
+    });
 });
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = router;
