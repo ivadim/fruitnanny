@@ -11,7 +11,7 @@ var DHT = (function ($) {
                             value: 0,
                             min: 10,
                             max: 30,
-                            label: "T* C",
+                            label: "* C",
                             title: "Temperature",
                             relativeGaugeSize: true,
                             gaugeWidthScale: 0.8,
