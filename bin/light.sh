@@ -1,9 +1,21 @@
 #!/bin/bash
 light_pin=2
-current=`gpio -g read $light_pin`
-if [ "$current" = "1" ]; then
-        new_value=0
-else
-        new_value=1
-fi
-gpio -g write $light_pin $new_value
+gpio -g mode $light_pin out
+
+function on {
+	gpio -g write $light_pin 1
+}
+
+function off {
+        gpio -g write $light_pin 0
+}
+
+function status {
+	gpio -g read $light_pin
+}
+
+case $1 in  
+  on) on ;; 
+  off) off ;; 
+  status) status ;; 
+esac
