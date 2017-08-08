@@ -18,11 +18,16 @@ server {
 	server_name _;	
 
 	root /opt/fruitnanny;
+
+	auth_basic "Baby monitor auth";
+	auth_basic_user_file /etc/nginx/.htpasswd;
 	
 	access_log /var/log/nginx/fruitnanny_http_access.log;
 	error_log  /var/log/nginx/fruitnanny_http_error.log warn;
-
+	
 	location / {
+		add_header 'Access-Control-Allow-Origin' '*';
+		add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     		proxy_set_header Host $http_host;
     		proxy_set_header X-NginX-Proxy true;
