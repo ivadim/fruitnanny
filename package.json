@@ -8,7 +8,7 @@
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Dmitry Ivano",
+  "author": "Dmitry Ivanov",
   "license": "MIT",
   "dependencies": {
     "@types/body-parser": "0.0.33",
