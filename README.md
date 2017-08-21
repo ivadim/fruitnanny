@@ -13,4 +13,4 @@ This repository contains NodeJS application and configurations files.
 
 # Instruction 
 
-Coming soon...
+https://ivadim.github.io/2017-08-21-fruitnanny/
