@@ -109,13 +109,13 @@ $(document).ready(function() {
 					  spinner.stop();
 					Janus.error(error);
 					bootbox.alert(error, function() {
-						window.location.reload();
+						//window.location.reload();
 					});
 				},
 				destroyed: function() {
 					if(spinner !== null && spinner !== undefined)
 					  spinner.stop();
-					window.location.reload();
+					//window.location.reload();
 				}
 			});
 	}});
