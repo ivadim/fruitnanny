@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ./partials/head %>
+</script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
+  <div class="wrapper">
+
+    <!-- Main Header -->
+    <header class="main-header">
+      <% include ./partials/header %>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <% include ./partials/sidebar %>
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Settings
+        </h1>
+
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="row">
+          <p id="settings-all" class="col-md-6"></p>
+          <script type="text/javascript">
+              $("#settings-all").text(JSON.stringify(config, null, 4));
+          </script>
+
+        </div>
+        <div class="row">
+          <p id="settings-random" class="col-md-6"></p>
+          <button onclick="ButtonRandomClick()" >Click me </button>
+          <script type="text/javascript">
+            function ButtonRandomClick() {
+              $.get("/api/custom_button/random").
+              done(function(data) {
+                $("#settings-random").text(data.random_number);
+              }).fail(function(err) {
+                  console.log( "error: " + err );
+              })
+            };
+        </script>
+        </div>
+    </div>
+
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <!-- Main Footer -->
+  <% include ./partials/footer %>
+  
+
+  </div>
+  <!-- ./wrapper -->
+
+  <% include ./partials/common-js %>
+
+
+</body>
+
+</html>

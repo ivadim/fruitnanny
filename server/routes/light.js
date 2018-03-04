@@ -1,27 +1,28 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
-let exec = require('child_process').exec;
+const cp = require("child_process");
 let router = express.Router();
 router.get("/on", (req, res, next) => {
-    exec("bin/light.sh on", function(){
+    cp.exec("bin/light.sh on", () => {
         res.json("on");
-    });     
-})
+    });
+});
 router.get("/off", (req, res, next) => {
-    exec("bin/light.sh off", function(){
+    cp.exec("bin/light.sh off", () => {
         res.json("off");
     });
 });
 router.get("/status", (req, res, next) => {
-    exec("bin/light.sh status", function(err, stdout, stderr){
-	var status = null;
-	if (stdout.trim() === "1") {
-	    status = "on"
-	} else {
-	    status = "off"
+    cp.exec("bin/light.sh status", (err, stdout, stderr) => {
+        let status = null;
+        if (stdout.trim() === "1") {
+            status = "on";
         }
-	res.json(status);
+        else {
+            status = "off";
+        }
+        res.json(status);
     });
 });
-Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = router;

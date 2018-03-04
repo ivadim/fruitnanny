@@ -11,6 +11,25 @@ This repository contains NodeJS application and configurations files.
 
 ![video](public/project/img/video-mobile.gif)
 
-# Instruction 
+# How to setup instruction
 
 https://ivadim.github.io/2017-08-21-fruitnanny/
+
+# Configuration
+
+Modify [fruitnanny_config](./fruitnanny_config.js) to configure the baby monitor.
+
+Params:
+* `baby_name` - baby's name to display in UI
+* `baby_birthday` - baby's birthday
+* `temp_unit` - temperature to display in Celsius (`C`) or Fahrenheit(`F`)
+
+> Restart the system after change
+
+To update baby's picture you need to replace file `public\project\img\baby.png`.
+
+# How to build and run locally
+
+* Install nodejs
+* Run `npm install`
+* Run `npm run grunt`
