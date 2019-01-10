@@ -62,6 +62,7 @@ var StreamContext = (function() {
 
     var pause_stream = function() {
         if (!initialized) return;
+        resume_audiostream();
         var new_state = !current_stream.getVideoTracks()[0].enabled
         current_stream.getVideoTracks()[0].enabled = new_state;
         var value = current_audio_value()
@@ -83,6 +84,7 @@ var StreamContext = (function() {
     var set_volume = function(new_value){
         console.log("set_volume");
         if (!initialized) return;
+        resume_audiostream();
         var old_value = current_audio_value();
         gain.gain.value = new_value;
         if (new_value === 0 && old_value !== 0 && mutecallback !== null) {
@@ -95,6 +97,7 @@ var StreamContext = (function() {
 
     var mute = function() {
         if (!initialized) return;
+        resume_audiostream();
         if (current_audio_value() == 0) {
             gain.gain.value = saved_audio_value;
             if (unmutecallback !== null) {
@@ -119,6 +122,13 @@ var StreamContext = (function() {
 
     var current_audio_value = function() {
         return parseFloat(gain.gain.value.toFixed(1))
+    }
+
+    var resume_audiostream = function() {
+        if (audioContext.state === "suspended") {
+            console.log("Current context was suspened. Enable it");
+            audioContext.resume();
+        }
     }
 
     return {

@@ -96,6 +96,11 @@ $(document).ready(function() {
 								
 								Janus.attachMediaStream($('#video').get(0), stream);
 								streamContext.init(stream);
+								if (streamContext.audioContext.state === "suspended") {
+									bootbox.confirm(message, function() {
+										streamContext.audioContext.resume_audiostream();
+									});
+								}
 								audioSpectrumWidget.enable();
 								
 							},
