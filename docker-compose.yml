@@ -2,12 +2,7 @@ version: '3'
 services:
   janus:
     image: ivadim/fruitnanny-janus
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    restart: always
     privileged: true
     network_mode: "host"
     volumes:
@@ -21,12 +16,7 @@ services:
 
   gstreamer-video:
     image: ivadim/fruitnanny-gstreamer
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    restart: always
     privileged: true
     network_mode: "host"
     depends_on:
@@ -37,12 +27,7 @@ services:
 
   gstreamer-audio:
     image: ivadim/fruitnanny-gstreamer
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    restart: always
     privileged: true
     network_mode: "host"
     depends_on:
@@ -53,12 +38,7 @@ services:
 
   fruitnanny:
     image: ivadim/fruitnanny-app
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    restart: always
     privileged: true
     volumes:
       - ./fruitnanny_config.js:/opt/fruitnanny/fruitnanny_config.js
@@ -70,12 +50,7 @@ services:
 
   nginx:
     image: arm32v7/nginx
-    deploy:
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-        window: 120s
+    restart: always
     network_mode: "host"
     depends_on:
       - janus
