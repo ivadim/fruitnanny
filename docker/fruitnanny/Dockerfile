@@ -14,12 +14,12 @@ RUN buildDeps="curl xz-utils" \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
 
-RUN buildDeps="build-essential python-pip python-setuptools git" \
-	&& apt-get update && apt-get install -y $buildDeps python-dev --no-install-recommends \
+RUN buildDeps="build-essential git" \
+	&& apt-get update && apt-get install -y $buildDeps python-dev wiringpi dos2unix python-pip python-setuptools --no-install-recommends \
     && git clone https://github.com/adafruit/Adafruit_Python_DHT /tmp/Adafruit_Python_DHT \
     && cd /tmp/Adafruit_Python_DHT \
 	&& git checkout 1.4.0 \
-    && python setup.py install --force-pi \
+    && python setup.py install --force-pi2 \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& apt-get clean \
     && rm -rf /tmp/* \
@@ -27,6 +27,8 @@ RUN buildDeps="build-essential python-pip python-setuptools git" \
 
 ADD . /opt/fruitnanny
 WORKDIR /opt/fruitnanny
+
+RUN dos2unix /opt/fruitnanny/bin/*
 
 RUN npm install
 CMD ["node", "server/app.js"]

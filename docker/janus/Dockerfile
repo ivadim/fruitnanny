@@ -7,7 +7,7 @@ RUN buildDeps="gcc autoconf automake libtool pkg-config git gtk-doc-tools gettex
     && apt-get install --no-install-recommends make libraspberrypi-dev \
         libpcre3 libpcre3-dev libffi-dev libmount-dev libmicrohttpd-dev libjansson-dev \
         libssl-dev libsrtp-dev libsofia-sip-ua-dev \
-        libopus-dev libogg-dev libglib2.0-dev $buildDeps \
+        libopus-dev libogg-dev libglib2.0-dev libgio2.0-cil-dev $buildDeps \
     \
     && git clone https://gitlab.freedesktop.org/libnice/libnice /tmp/libnice \ 
     && cd /tmp/libnice \
@@ -30,7 +30,7 @@ RUN buildDeps="gcc autoconf automake libtool pkg-config git gtk-doc-tools gettex
     && ./autogen.sh \
     && ./configure --disable-websockets --disable-data-channels --disable-rabbitmq --disable-mqtt \
     && make && make install \
-    && apt-get purge -y --auto-remove $buildDeps \
+    && apt-get purge -y $buildDeps \
 	&& apt-get clean \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
