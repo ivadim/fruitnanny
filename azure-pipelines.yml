@@ -26,16 +26,15 @@ jobs:
           stage.name: 'Fruitnanny'
           container.name: 'ivadim/fruitnanny-app'
       maxParallel: 3
-
     steps:
     - script: |
       docker run --rm --privileged multiarch/qemu-user-static:register --reset
       docker build . -f docker/janus/Dockerfile -t $(container.name)
-      displayName: 'Build $(stage.name) Container'
+    displayName: 'Build $(stage.name) Container'
     
     - script: |
       docker image save ivadim/fruitnanny-janus -o $(Build.ArtifactStagingDirectory)/fruitnanny-app-$(Build.BuildNumber).tgz
-      displayName: 'Export $(stage.name) Container Image'
+    displayName: 'Export $(stage.name) Container Image'
     
     - task: PublishBuildArtifacts@1
       inputs:
