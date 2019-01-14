@@ -1,14 +1,9 @@
-name: $(major).$(minor).$(patch)
+name: $(BuildDefinitionName).$(Build.SourceBranchName).$(Rev:.r)
 
-trigger:
+trigger: none
+
+pr:
 - master
-
-pr: none
-
-variables:
-  major: 1
-  minor: 0
-  patch: $[counter('versioncounter', 1)]
 
 jobs:
   - job: Janus
@@ -32,12 +27,3 @@ jobs:
       docker run --rm --privileged multiarch/qemu-user-static:register --reset
       docker build . -f docker/janus/Dockerfile -t $(container.name)
       displayName: 'Build $(stage.name) Container'
-    
-    - script: |
-      docker image save ivadim/fruitnanny-janus -o $(Build.ArtifactStagingDirectory)/fruitnanny-app-$(Build.BuildNumber).tgz
-      displayName: 'Export $(stage.name) Container Image'
-    
-    - task: PublishBuildArtifacts@1
-      inputs:
-        pathtoPublish: $(Build.ArtifactStagingDirectory)
-        artifactName: $(stage.name)
