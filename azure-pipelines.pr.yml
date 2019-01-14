@@ -24,6 +24,6 @@ jobs:
 
     steps:
     - script: |
-      docker run --rm --privileged multiarch/qemu-user-static:register --reset
-      docker build . -f docker/janus/Dockerfile -t $(container.name)
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset
+        docker build . -f docker/janus/Dockerfile -t $(container.name)
       displayName: 'Build $(stage.name) Container'
