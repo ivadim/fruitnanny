@@ -18,12 +18,15 @@ jobs:
       matrix:
         Janus:
           stage.name: 'janus'
+          label.name: 'fruitnanny-janus'
           container.name: 'ivadim/fruitnanny-janus'
         GStreamer:
           stage.name: 'gstreamer'
+          label.name: 'fruitnanny-gstreamer'
           container.name: 'ivadim/fruitnanny-gstreamer'
         Fruitnanny:
           stage.name: 'fruitnanny'
+          label.name: 'fruitnanny-app'
           container.name: 'ivadim/fruitnanny-app'
       maxParallel: 3
     steps:
@@ -33,7 +36,7 @@ jobs:
         displayName: 'Build $(stage.name) Container'
 
       - script: |
-          docker image save ivadim/$(container.name) -o $(Build.ArtifactStagingDirectory)/$(container.name)-$(Build.BuildNumber).tgz
+          docker image save $(container.name) -o $(Build.ArtifactStagingDirectory)/$(label.name):$(Build.BuildNumber).tgz
         displayName: 'Export $(stage.name) Container Image'
 
       - task: PublishBuildArtifacts@1
