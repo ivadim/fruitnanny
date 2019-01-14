@@ -12,5 +12,8 @@ pool:
 steps:
 
 - script: |
-    docker build . -f docker/fruitnanny/Dockerfile -t ivadim/fruitnanny
-  displayName: 'Build fruitnanny app'
+    docker run --rm --privileged multiarch/qemu-user-static:register --reset
+    docker build . -f docker/fruitnanny/Dockerfile -t ivadim/fruitnanny-app
+    docker build . -f docker/gstreamer/Dockerfile -t ivadim/fruitnanny-gstreamer
+    docker build . -f docker/janus/Dockerfile -t ivadim/fruitnanny-janus
+  displayName: 'Build fruitnanny docker images'
