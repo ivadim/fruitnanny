@@ -1,4 +1,8 @@
+[![Build Status](https://dev.azure.com/fruitnanny/Build/_apis/build/status/fruitnanny?branchName=master)](https://dev.azure.com/fruitnanny/Build/_build/latest?definitionId=1?branchName=master)
+
+
 ![main](public/project/img/fn2.jpg)
+
 
 # Overview
 

@@ -11,29 +11,29 @@ variables:
   patch: $[counter('versioncounter', 1)]
 
 jobs:
-  - job: Janus
+  - job: Build
     pool:
       vmImage: 'Ubuntu-16.04'
     strategy:
       matrix:
         Janus:
-          stage.name: 'Janus'
+          stage.name: 'janus'
           container.name: 'ivadim/fruitnanny-janus'
         GStreamer:
-          stage.name: 'GStreamer'
+          stage.name: 'gstreamer'
           container.name: 'ivadim/fruitnanny-gstreamer'
         Fruitnanny:
-          stage.name: 'Fruitnanny'
+          stage.name: 'fruitnanny'
           container.name: 'ivadim/fruitnanny-app'
       maxParallel: 3
     steps:
       - script: |
           docker run --rm --privileged multiarch/qemu-user-static:register --reset
-          docker build . -f docker/janus/Dockerfile -t $(container.name)
+          docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name)
         displayName: 'Build $(stage.name) Container'
 
       - script: |
-          docker image save ivadim/fruitnanny-janus -o $(Build.ArtifactStagingDirectory)/fruitnanny-app-$(Build.BuildNumber).tgz
+          docker image save ivadim/$(container.name) -o $(Build.ArtifactStagingDirectory)/$(container.name)-$(Build.BuildNumber).tgz
         displayName: 'Export $(stage.name) Container Image'
 
       - task: PublishBuildArtifacts@1
