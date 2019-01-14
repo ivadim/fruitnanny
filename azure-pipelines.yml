@@ -36,7 +36,7 @@ jobs:
         displayName: 'Build $(stage.name) Container'
 
       - script: |
-          docker image save $(container.name) -o $(Build.ArtifactStagingDirectory)/$(label.name):$(Build.BuildNumber).tgz
+          docker image save $(container.name) -o $(Build.ArtifactStagingDirectory)/$(label.name)-v$(Build.BuildNumber).tgz
         displayName: 'Export $(stage.name) Container Image'
 
       - task: PublishBuildArtifacts@1
