@@ -1,5 +1,10 @@
 ![main](public/project/img/fn2.jpg)
 
+[![Build Status](https://dev.azure.com/fruitnanny/Build/_apis/build/status/fruitnanny?branchName=master)](https://dev.azure.com/fruitnanny/Build/_build/latest?definitionId=1?branchName=master)
+[![Relase Status](https://vsrm.dev.azure.com/fruitnanny/_apis/public/Release/badge/68b6a6ae-a3e4-41fa-b16e-bc4bbacd139a/1/1)](https://vsrm.dev.azure.com/fruitnanny/_apis/public/Release/badge/68b6a6ae-a3e4-41fa-b16e-bc4bbacd139a/1/1)
+
+
+
 # Overview
 
 **Fruitnanny** is a code name for a DIY *geek* baby monitor. 

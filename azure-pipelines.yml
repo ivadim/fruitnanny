@@ -1,19 +1,45 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
+name: $(major).$(minor).$(patch)
 
 trigger:
 - master
 
-pool:
-  vmImage: 'Ubuntu-16.04'
+pr: none
 
-steps:
+variables:
+  major: 1
+  minor: 0
+  patch: $[counter('versioncounter', 1)]
 
-- script: |
-    docker run --rm --privileged multiarch/qemu-user-static:register --reset
-    docker build . -f docker/fruitnanny/Dockerfile -t ivadim/fruitnanny-app
-    docker build . -f docker/gstreamer/Dockerfile -t ivadim/fruitnanny-gstreamer
-    docker build . -f docker/janus/Dockerfile -t ivadim/fruitnanny-janus
-  displayName: 'Build fruitnanny docker images'
+jobs:
+  - job: Build
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    strategy:
+      matrix:
+        Janus:
+          stage.name: 'janus'
+          label.name: 'fruitnanny-janus'
+          container.name: 'ivadim/fruitnanny-janus'
+        GStreamer:
+          stage.name: 'gstreamer'
+          label.name: 'fruitnanny-gstreamer'
+          container.name: 'ivadim/fruitnanny-gstreamer'
+        Fruitnanny:
+          stage.name: 'fruitnanny'
+          label.name: 'fruitnanny-app'
+          container.name: 'ivadim/fruitnanny-app'
+      maxParallel: 3
+    steps:
+      - script: |
+          docker run --rm --privileged multiarch/qemu-user-static:register --reset
+          docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name)
+        displayName: 'Build $(stage.name) Container'
+
+      - script: |
+          docker image save $(container.name) -o $(Build.ArtifactStagingDirectory)/$(label.name)-v$(Build.BuildNumber).tgz
+        displayName: 'Export $(stage.name) Container Image'
+
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: $(Build.ArtifactStagingDirectory)
+          artifactName: images

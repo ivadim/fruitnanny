@@ -1,0 +1,29 @@
+name: $(BuildDefinitionName).$(Build.SourceBranchName).$(Rev:.r)
+
+trigger: none
+
+pr:
+- master
+
+jobs:
+  - job: Build
+    pool:
+      vmImage: 'Ubuntu-16.04'
+    strategy:
+      matrix:
+        Janus:
+          stage.name: 'janus'
+          container.name: 'ivadim/fruitnanny-janus'
+        GStreamer:
+          stage.name: 'gstreamer'
+          container.name: 'ivadim/fruitnanny-gstreamer'
+        Fruitnanny:
+          stage.name: 'fruitnanny'
+          container.name: 'ivadim/fruitnanny-app'
+      maxParallel: 3
+
+    steps:
+    - script: |
+        docker run --rm --privileged multiarch/qemu-user-static:register --reset
+        docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name)
+      displayName: 'Build $(stage.name) Container'
