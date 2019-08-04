@@ -225,7 +225,7 @@ nat: {
 # names to identify the plugins to disable. By default all available
 # plugins are enabled and loaded at startup.
 plugins: {
-  disable = "libjanus_audiobridge.so,libjanus_ducktape.so,libjanus_echotest.so,libjanus_lua.so,libjanus_nosip.so,libjanus_recordplay.so,libjanus_sipre.so,libjanus_sip.so,libjanus_textroom.so,libjanus_videocall.su,libjanus_videoroom.so,libjanus_voicemail.so"
+  disable = "libjanus_audiobridge.so,libjanus_duktape.so,libjanus_echotest.so,libjanus_lua.so,libjanus_nosip.so,libjanus_recordplay.so,libjanus_sipre.so,libjanus_sip.so,libjanus_textroom.so,libjanus_videocall.su,libjanus_videoroom.so,libjanus_voicemail.so"
 }
 
 # You can choose which of the available transports should be enabled or
