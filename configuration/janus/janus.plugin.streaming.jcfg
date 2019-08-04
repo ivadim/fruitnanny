@@ -1,0 +1,14 @@
+fruitnanny: {
+  type = rtp
+  id = 1
+  description = Fruitnanny stream from Raspberry Pi
+  audio = yes
+  video = yes
+  audioport = 5002
+  audiopt = 111
+  audiortpmap = opus/48000/2
+  videoport = 5004
+  videopt = 96
+  videortpmap = H264/90000
+  videofmtp = profile-level-id=42e028\;packetization-mode=1
+}
