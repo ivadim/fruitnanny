@@ -15,7 +15,7 @@ RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && dpkg-buildpackage -us -uc \
     && dpkg -i ../gstreamer*.deb \
     && apt-get purge --auto-remove -y build-essential meson debhelper autoconf \
-    automake libtool pkg-config autotools-dev libudev-dev libdc1394-22-dev \
+    automake libtool autotools-dev libudev-dev libdc1394-22-dev \
     libraspberrypi-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev git \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
