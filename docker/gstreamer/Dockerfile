@@ -12,8 +12,9 @@ RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && git clone https://github.com/thaytan/gst-rpicamsrc /tmp/gst-rpicamsrc \
     && cd /tmp/gst-rpicamsrc \
     && git checkout 4ee114fbbf35d85169603aa37678642e9774152a \
-    && dpkg-buildpackage -us -uc \
-    && dpkg -i ../gstreamer*.deb \
+    && ./autogen.sh --prefix=/usr --libdir=/usr/lib/arm-linux-gnueabihf/ \
+    && make \
+    && make install \
     && apt-get purge --auto-remove -y build-essential meson debhelper autoconf \
     automake libtool autotools-dev libudev-dev libdc1394-22-dev \
     libraspberrypi-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev git \
