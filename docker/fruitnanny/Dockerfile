@@ -10,7 +10,7 @@ RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 
-RUN apt-get update
+RUN apt-get update \
     && apt-get install -y python-pip python3-pip \
     && pip install Adafruit-DHT \
     && pip3 install Adafruit-DHT \
