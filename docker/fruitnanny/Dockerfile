@@ -10,10 +10,13 @@ RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 
-RUN apt-get update \
+RUN buildDeps="python-setuptools python3-setuptools" \
+    && apt-get update \
+    && apt-get install -y $buildDeps \
     && apt-get install -y python-pip python3-pip \
     && pip install Adafruit-DHT \
     && pip3 install Adafruit-DHT \
+    && apt-get --purge remove $buildDeps && apt-get --purge autoremove \
     && apt-get clean \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
