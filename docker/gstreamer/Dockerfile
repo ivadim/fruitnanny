@@ -1,4 +1,4 @@
-FROM balenalib/rpi-raspbian:stretch
+FROM balenalib/rpi-raspbian:buster
 
 RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && echo 'APT::Install-Suggests "false";' >>/etc/apt/apt.conf.d/00recommends \
