@@ -5,7 +5,7 @@ ENV NODE_VERSION 10.15.0
 RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && echo 'APT::Install-Suggests "false";' >>/etc/apt/apt.conf.d/00recommends \
     && apt-get update \
-    && apt-get install -y --no-install-recommends nodejs \
+    && apt-get install -y --no-install-recommends nodejs npm \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
