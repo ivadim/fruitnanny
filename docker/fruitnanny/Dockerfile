@@ -1,22 +1,14 @@
-FROM balenalib/rpi-raspbian:buster
+FROM node:lts-buster
 
-ENV NODE_VERSION 10.15.0
-
-RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
+RUN buildDeps="build-essential python-dev python3-dev python-setuptools python3-setuptools" \
+    && echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && echo 'APT::Install-Suggests "false";' >>/etc/apt/apt.conf.d/00recommends \
     && apt-get update \
-    && apt-get install -y --no-install-recommends nodejs npm \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /tmp/*
-
-RUN buildDeps="build-essential python-setuptools python3-setuptools" \
-    && apt-get update \
-    && apt-get install -y python-pip python3-pip \
+    && apt-get install -y python-pip python3-pip dos2unix \
     && apt-get install -y $buildDeps \
-    && pip install Adafruit-DHT \
-    && pip3 install Adafruit-DHT \
-    && apt-get --purge remove $buildDeps && apt-get --purge autoremove \
+    && pip install wheel && pip install Adafruit-DHT \
+    && pip3 install wheel && pip3 install Adafruit-DHT \
+    && apt-get --purge remove -y $buildDeps && apt-get --purge -y autoremove \
     && apt-get clean \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
