@@ -102,8 +102,8 @@ general: {
 
 # Certificate and key to use for DTLS (and passphrase if needed).
 certificates: {
-  cert_pem = "/etc/ssl/certs/ssl-cert-snakeoil.pem"
-  cert_key = "/etc/ssl/private/ssl-cert-snakeoil.key"
+  cert_pem = "/etc/fruitnanny-ssl/fruitnanny.pem"
+  cert_key = "/etc/fruitnanny-ssl/fruitnanny.key"
   #cert_pwd = "secretpassphrase"
 }
 
@@ -225,7 +225,7 @@ nat: {
 # names to identify the plugins to disable. By default all available
 # plugins are enabled and loaded at startup.
 plugins: {
-  disable = "libjanus_audiobridge.so,libjanus_duktape.so,libjanus_echotest.so,libjanus_lua.so,libjanus_nosip.so,libjanus_recordplay.so,libjanus_sipre.so,libjanus_sip.so,libjanus_textroom.so,libjanus_videocall.so,libjanus_videoroom.so,libjanus_voicemail.so"
+  disable = "libjanus_audiobridge.so,libjanus_duktape.so,libjanus_echotest.so,libjanus_lua.so,libjanus_nosip.so,libjanus_recordplay.so,libjanus_sipre.so,libjanus_sip.so,libjanus_textroom.so,libjanus_videocall.so,libjanus_videoroom.so,libjanus_voicemail.so,libjanus_websocket.so"
 }
 
 # You can choose which of the available transports should be enabled or
