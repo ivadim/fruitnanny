@@ -1,0 +1,63 @@
+version: '3'
+services:
+  janus:
+    image: fruitnanny-janus:dev
+    restart: always
+    privileged: true
+    network_mode: "host"
+    volumes:
+      - ./configuration/janus:/etc/janus
+    command: /usr/bin/janus -o
+    expose:
+      - 8088 # api http
+      - 8089 # api https
+      - 5002 # audio
+      - 5004 # video
+
+  gstreamer-video:
+    image: fruitnanny-gstreamer:dev
+    restart: always
+    privileged: true
+    network_mode: "host"
+    depends_on:
+      - janus
+    devices:
+      - "/dev/vchiq:/dev/vchiq"
+    command: gst-launch-1.0 -v rpicamsrc name=src preview=0 exposure-mode=night fullscreen=0 bitrate=1000000 annotation-mode=time+date annotation-text-size=20 ! video/x-h264,width=960,height=540,framerate=12/1 ! queue max-size-bytes=0 max-size-buffers=0 ! h264parse ! rtph264pay config-interval=1 pt=96 ! queue ! udpsink host=127.0.0.1 port=5004  sync=false
+
+  gstreamer-audio:
+    image: fruitnanny-gstreamer:dev
+    restart: always
+    privileged: true
+    network_mode: "host"
+    depends_on:
+      - janus
+    devices:
+      - "/dev/snd:/dev/snd"
+    command: gst-launch-1.0 -v alsasrc device=hw:1 ! audioconvert ! audioresample ! opusenc ! rtpopuspay ! queue max-size-bytes=0 max-size-buffers=0 ! udpsink host=127.0.0.1 port=5002
+
+  fruitnanny:
+    image: fruitnanny-app:dev
+    restart: always
+    privileged: true
+    volumes:
+      - ./fruitnanny_config.js:/opt/fruitnanny/fruitnanny_config.js
+    network_mode: "host"
+    depends_on:
+      - janus
+    expose:
+      - 7000
+
+  nginx:
+    image: arm32v7/nginx
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - janus
+      - fruitnanny
+    volumes:
+      - ./configuration/nginx/fruitnanny_http:/etc/nginc/conf.d/default.conf
+      - ./configuration/nginx/.htpasswd:/etc/nginx/.htpasswd
+    ports:
+      - "80:80"
+      - "443:443"
