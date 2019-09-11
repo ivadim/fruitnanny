@@ -1421,6 +1421,7 @@ function Janus(gatewayCallbacks) {
 			gap = 50;	// We choose 50ms as the default gap between tones
 		Janus.debug("Sending DTMF string " + tones + " (duration " + duration + "ms, gap " + gap + "ms)");
 		config.dtmfSender.insertDTMF(tones, duration, gap);
+		callbacks.success();
 	}
 
 	// Private method to destroy a plugin handle
@@ -1506,7 +1507,8 @@ function Janus(gatewayCallbacks) {
 			if(((!media.update && isAudioSendEnabled(media)) || (media.update && (media.addAudio || media.replaceAudio))) &&
 					stream.getAudioTracks() && stream.getAudioTracks().length) {
 				config.myStream.addTrack(stream.getAudioTracks()[0]);
-				if(media.replaceAudio && Janus.webRTCAdapter.browserDetails.browser === "firefox") {
+				if(media.replaceAudio && (Janus.webRTCAdapter.browserDetails.browser === "firefox" ||
+						(Janus.webRTCAdapter.browserDetails.browser === "chrome" && Janus.webRTCAdapter.browserDetails.version >= 72))) {
 					Janus.log("Replacing audio track:", stream.getAudioTracks()[0]);
 					for(var index in config.pc.getSenders()) {
 						var s = config.pc.getSenders()[index];
@@ -1517,7 +1519,7 @@ function Janus(gatewayCallbacks) {
 				} else {
 					if(Janus.webRTCAdapter.browserDetails.browser === "firefox" && Janus.webRTCAdapter.browserDetails.version >= 59) {
 						// Firefox >= 59 uses Transceivers
-						Janus.log((media.replaceVideo ? "Replacing" : "Adding") + " video track:", stream.getVideoTracks()[0]);
+						Janus.log((media.replaceAudio ? "Replacing" : "Adding") + " audio track:", stream.getAudioTracks()[0]);
 						var audioTransceiver = null;
 						var transceivers = config.pc.getTransceivers();
 						if(transceivers && transceivers.length > 0) {
@@ -1544,7 +1546,8 @@ function Janus(gatewayCallbacks) {
 			if(((!media.update && isVideoSendEnabled(media)) || (media.update && (media.addVideo || media.replaceVideo))) &&
 					stream.getVideoTracks() && stream.getVideoTracks().length) {
 				config.myStream.addTrack(stream.getVideoTracks()[0]);
-				if(media.replaceVideo && Janus.webRTCAdapter.browserDetails.browser === "firefox") {
+				if(media.replaceVideo && (Janus.webRTCAdapter.browserDetails.browser === "firefox" ||
+						(Janus.webRTCAdapter.browserDetails.browser === "chrome" && Janus.webRTCAdapter.browserDetails.version >= 72))) {
 					Janus.log("Replacing video track:", stream.getVideoTracks()[0]);
 					for(var index in config.pc.getSenders()) {
 						var s = config.pc.getSenders()[index];
@@ -1894,7 +1897,8 @@ function Janus(gatewayCallbacks) {
 				}
 				if(config.pc.getSenders() && config.pc.getSenders().length) {
 					var ra = true;
-					if(media.replaceAudio && Janus.webRTCAdapter.browserDetails.browser === "firefox") {
+					if(media.replaceAudio && (Janus.webRTCAdapter.browserDetails.browser === "firefox" ||
+							(Janus.webRTCAdapter.browserDetails.browser === "chrome" && Janus.webRTCAdapter.browserDetails.version >= 72))) {
 						// On Firefox we can use replaceTrack
 						ra = false;
 					}
@@ -1920,7 +1924,8 @@ function Janus(gatewayCallbacks) {
 				}
 				if(config.pc.getSenders() && config.pc.getSenders().length) {
 					var rv = true;
-					if(media.replaceVideo && Janus.webRTCAdapter.browserDetails.browser === "firefox") {
+					if(media.replaceVideo && (Janus.webRTCAdapter.browserDetails.browser === "firefox" ||
+							(Janus.webRTCAdapter.browserDetails.browser === "chrome" && Janus.webRTCAdapter.browserDetails.version >= 72))) {
 						// On Firefox we can use replaceTrack
 						rv = false;
 					}
@@ -2135,9 +2140,8 @@ function Janus(gatewayCallbacks) {
 									isAudioSendEnabled(media) && !media.keepAudio);
 							});
 						}
-					} else if (window.navigator.userAgent.match('Firefox')) {
-						var ffver = parseInt(window.navigator.userAgent.match(/Firefox\/(.*)/)[1], 10);
-						if(ffver >= 33) {
+					} else if(Janus.webRTCAdapter.browserDetails.browser === 'firefox') {
+						if(Janus.webRTCAdapter.browserDetails.version >= 33) {
 							// Firefox 33+ has experimental support for screen sharing
 							constraints = {
 								video: {
@@ -2465,8 +2469,9 @@ function Janus(gatewayCallbacks) {
 			Janus.log("Creating answer (iceDone=" + config.iceDone + ", simulcast=" + simulcast + ")");
 		}
 		var mediaConstraints = null;
-		if(Janus.webRTCAdapter.browserDetails.browser === "firefox" && Janus.webRTCAdapter.browserDetails.version >= 59) {
-			// Firefox >= 59 uses Transceivers
+		if((Janus.webRTCAdapter.browserDetails.browser === "firefox" && Janus.webRTCAdapter.browserDetails.version >= 59) ||
+				(Janus.webRTCAdapter.browserDetails.browser === "chrome" && Janus.webRTCAdapter.browserDetails.version >= 72)) {
+			// Firefox >= 59 and Chrome >= 72 use Transceivers
 			mediaConstraints = {};
 			var audioTransceiver = null, videoTransceiver = null;
 			var transceivers = config.pc.getTransceivers();
@@ -2970,11 +2975,11 @@ function Janus(gatewayCallbacks) {
 				if(match) {
 					mslabel = match[1];
 				}
-				match = lines[i].match('a=ssrc:' + ssrc + ' label:(.+)')
+				match = lines[i].match('a=ssrc:' + ssrc[0] + ' label:(.+)')
 				if(match) {
 					label = match[1];
 				}
-				if(lines[i].indexOf('a=ssrc:' + ssrc_fid) === 0) {
+				if(lines[i].indexOf('a=ssrc:' + ssrc_fid[0]) === 0) {
 					lines.splice(i, 1); i--;
 					continue;
 				}
