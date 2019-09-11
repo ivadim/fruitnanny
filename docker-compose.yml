@@ -6,8 +6,9 @@ services:
     privileged: true
     network_mode: "host"
     volumes:
-      - ./configuration/janus:/usr/local/etc/janus
-    command: /usr/local/bin/janus -o
+      - ./configuration/janus:/etc/janus
+      - ./configuration/ssl:/etc/fruitnanny-ssl
+    command: /usr/bin/janus -o
     expose:
       - 8088 # api http
       - 8089 # api https
@@ -57,7 +58,9 @@ services:
       - fruitnanny
     volumes:
       - ./configuration/nginx/fruitnanny_http:/etc/nginx/conf.d/default.conf
+      - ./configuration/nginx/fruitnanny_https:/etc/nginx/conf.d/default-ssl.conf
       - ./configuration/nginx/.htpasswd:/etc/nginx/.htpasswd
+      - ./configuration/ssl:/etc/fruitnanny-ssl
     ports:
       - "80:80"
       - "443:443"

@@ -16,12 +16,12 @@
 
 server {
 	listen 443 default_server ssl;
-        ssl_certificate    /usr/local/share/janus/certs/mycert.pem;
-        ssl_certificate_key    /usr/local/share/janus/certs/mycert.key;
-	server_name default;	
+        ssl_certificate    /etc/fruitnanny-ssl/fruitnanny.pem;
+        ssl_certificate_key    /etc/fruitnanny-ssl/fruitnanny.key;
+	server_name default;
 
 	root /opt/fruitnanny;
-        
+
 	auth_basic "Baby monitor auth";
         auth_basic_user_file /etc/nginx/.htpasswd;
 
