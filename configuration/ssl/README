@@ -1,0 +1,2 @@
+For Docker-based installations, this directory should contain
+the SSL certificates that will be used. See INSTALLATION.md.

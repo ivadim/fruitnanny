@@ -6,8 +6,9 @@ services:
     privileged: true
     network_mode: "host"
     volumes:
-      - ./configuration/janus:/usr/local/etc/janus
-    command: /usr/local/bin/janus -o
+      - ./configuration/janus:/etc/janus
+      - ./configuration/ssl:/etc/fruitnanny-ssl
+    command: /usr/bin/janus -o
     expose:
       - 8088 # api http
       - 8089 # api https
@@ -21,6 +22,9 @@ services:
     network_mode: "host"
     depends_on:
       - janus
+    volumes:
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
     devices:
       - "/dev/vchiq:/dev/vchiq"
     command: gst-launch-1.0 -v rpicamsrc name=src preview=0 exposure-mode=night fullscreen=0 bitrate=1000000 annotation-mode=time+date annotation-text-size=20 ! video/x-h264,width=960,height=540,framerate=12/1 ! queue max-size-bytes=0 max-size-buffers=0 ! h264parse ! rtph264pay config-interval=1 pt=96 ! queue ! udpsink host=127.0.0.1 port=5004  sync=false
@@ -57,7 +61,9 @@ services:
       - fruitnanny
     volumes:
       - ./configuration/nginx/fruitnanny_http:/etc/nginx/conf.d/default.conf
+      - ./configuration/nginx/fruitnanny_https:/etc/nginx/conf.d/default-ssl.conf
       - ./configuration/nginx/.htpasswd:/etc/nginx/.htpasswd
+      - ./configuration/ssl:/etc/fruitnanny-ssl
     ports:
       - "80:80"
       - "443:443"
