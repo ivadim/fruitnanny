@@ -1,4 +1,4 @@
-FROM node:lts-buster
+FROM arm32v7/node:12.13.0-buster
 
 RUN buildDeps="build-essential python-dev python3-dev python-setuptools python3-setuptools" \
     && echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
