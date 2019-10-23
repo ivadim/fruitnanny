@@ -24,7 +24,13 @@ jobs:
 
     steps:
     - script: |
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        sudo apt-get update
+        sudo apt-get install docker-ce
         docker --version
+      displayName: 'Update docker'
+    - script: |
         docker run --rm --privileged multiarch/qemu-user-static:register --reset
         docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name) --platform arm
         docker images
