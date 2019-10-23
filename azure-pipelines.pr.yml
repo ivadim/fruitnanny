@@ -25,5 +25,7 @@ jobs:
     steps:
     - script: |
         docker run --rm --privileged multiarch/qemu-user-static:register --reset
-        docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name)
+        docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name) --platform arm
+        docker images
+        docker inspect $(container.name)
       displayName: 'Build $(stage.name) Container'
