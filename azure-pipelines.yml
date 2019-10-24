@@ -31,7 +31,7 @@ jobs:
       maxParallel: 3
     steps:
       - script: |
-          docker --version
+          docker version
           docker run --rm --privileged multiarch/qemu-user-static:register --reset
           docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name) --platform arm
           docker images
