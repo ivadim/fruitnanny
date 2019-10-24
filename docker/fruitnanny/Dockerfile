@@ -5,12 +5,12 @@ ENV NODE_VERSION 12.13.0
 RUN buildDeps="curl xz-utils" \
 	&& set -x \
 	&& apt-get update && apt-get install -y $buildDeps --no-install-recommends \
-	&& curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-armv6l.tar.xz" \
-	&& tar -xJf "node-v$NODE_VERSION-linux-armv6l.tar.xz" -C /usr/local --strip-components=1  \
+	&& curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-armv7l.tar.xz" \
+	&& tar -xJf "node-v$NODE_VERSION-linux-armv7l.tar.xz" -C /usr/local --strip-components=1  \
     && ln -s /usr/local/bin/node /usr/local/bin/nodejs \
 	&& apt-get purge -y --auto-remove $buildDeps \
 	&& apt-get clean \
-	&& rm "node-v$NODE_VERSION-linux-armv6l.tar.xz" \
+	&& rm "node-v$NODE_VERSION-linux-armv7l.tar.xz" \
     && rm -rf /tmp/* \
     && rm -rf /var/lib/apt/lists/*
 
