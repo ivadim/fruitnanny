@@ -13,7 +13,7 @@ variables:
 jobs:
   - job: Build
     pool:
-      vmImage: 'Ubuntu-16.04'
+      vmImage: 'ubuntu-18.04'
     strategy:
       matrix:
         Janus:
@@ -31,8 +31,11 @@ jobs:
       maxParallel: 3
     steps:
       - script: |
+          docker version
           docker run --rm --privileged multiarch/qemu-user-static:register --reset
           docker build . -f docker/$(stage.name)/Dockerfile -t $(container.name)
+          docker images
+          docker inspect $(container.name)
         displayName: 'Build $(stage.name) Container'
 
       - script: |
