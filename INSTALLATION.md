@@ -17,8 +17,14 @@ for your Raspberry Pi.
 
 ## Non-Docker installation
 
+These directions assume a recent Raspbian installation.
+
 ### janus
 
+* Set up mDNS.
+  ```
+  apt-get install avahi-daemon libnss-mdns
+  ```
 * Install janus
 
   ```
