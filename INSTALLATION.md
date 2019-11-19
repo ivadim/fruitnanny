@@ -63,7 +63,7 @@ openssl passwd -apr1 >>  ./configuration/nginx/.htpasswd
 ### Run the system
 ```
 cd /opt/fruitnanny
-sudo docker-compose up -d
+docker-compose up -d
 ```
 
 ## Non-Docker installation
