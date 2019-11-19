@@ -2,6 +2,9 @@
 
 ## Docker-based installation
 
+### OS image
+* Raspbian Buster Lite - https://downloads.raspberrypi.org/raspbian_lite_latest
+
 ### Install tools
 * git and extra libs
   ```
