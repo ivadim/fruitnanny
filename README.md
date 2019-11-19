@@ -38,7 +38,7 @@ Follow [installation instruction](INSTALLATION.md)
   * Firefox 70.0 (downloaded from Mozilla) 👍 
 * Android
   * Chrome 78.0.3904.62 👍 
-  * Firefox (latest stable) 👎 (No idea why yet)
+  * Firefox (latest stable) 👎
 * iOS (13.1, Xcode emulator)
   * Safari 👍 
 
