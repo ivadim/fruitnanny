@@ -2,7 +2,7 @@ version: '3'
 services:
   janus:
     image: ivadim/fruitnanny-janus
-    restart: always
+    restart: "no"
     privileged: true
     network_mode: "host"
     volumes:
@@ -16,7 +16,7 @@ services:
 
   gstreamer-video:
     image: ivadim/fruitnanny-gstreamer
-    restart: always
+    restart: "no"
     privileged: true
     network_mode: "host"
     depends_on:
@@ -30,7 +30,7 @@ services:
 
   gstreamer-audio:
     image: ivadim/fruitnanny-gstreamer
-    restart: always
+    restart: "no"
     privileged: true
     network_mode: "host"
     depends_on:
@@ -42,7 +42,7 @@ services:
 
   fruitnanny:
     image: ivadim/fruitnanny-app
-    restart: always
+    restart: "no"
     privileged: true
     volumes:
       - ./fruitnanny_config.js:/opt/fruitnanny/fruitnanny_config.js
@@ -55,7 +55,7 @@ services:
 
   nginx:
     image: arm32v7/nginx
-    restart: always
+    restart: "no"
     network_mode: "host"
     depends_on:
       - janus
@@ -67,3 +67,36 @@ services:
     ports:
       - "80:80"
       - "443:443"
+
+  notification-temp:
+    build:
+      context: .
+      dockerfile: docker/notification/Dockerfile
+    restart: "no"
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - /opt/fruitnanny/bin:/opt/fruitnanny/bin
+    depends_on:
+      - nginx
+      - janus
+      - fruitnanny
+    #command: /bin/bash
+    #tty: true
+    command: python3 /opt/fruitnanny/bin/temperature.py
+
+  notification-motion:
+    image: fruitnanny_notification-temp
+    restart: "no"
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - /opt/fruitnanny/bin:/opt/fruitnanny/bin
+    depends_on:
+      - nginx
+      - janus
+      - fruitnanny
+      - notification-temp
+    #command: /bin/bash
+    #tty: true
+    command: python3 /opt/fruitnanny/bin/motion.py

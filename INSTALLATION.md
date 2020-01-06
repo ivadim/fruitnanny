@@ -60,6 +60,11 @@ openssl passwd -apr1 >>  ./configuration/nginx/.htpasswd
 
 `openssl` will prompt for password
 
+### Configure notification function
+First, create an account on Pushbullet.com.
+
+Then, set up your own configuration by editing the notification configuration file (available here in the fruitnanny folder: bin/configuration).
+
 ### Run the system
 ```console
 cd /opt/fruitnanny

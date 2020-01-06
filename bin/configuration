@@ -1,0 +1,7 @@
+[NOTIFICATION]
+url: http://rpi-nanny.home/
+Pushbullet_API_Key: abcdefgh
+
+[TEMPERATURE]
+temp_min: 20
+temp_max: 20
