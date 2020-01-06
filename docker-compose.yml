@@ -37,7 +37,8 @@ services:
       - janus
     devices:
       - "/dev/snd:/dev/snd"
-    command: gst-launch-1.0 -v alsasrc device=hw:1 ! audioconvert ! audioresample ! opusenc ! rtpopuspay ! queue max-size-bytes=0 max-size-buffers=0 ! udpsink host=127.0.0.1 port=5002
+        #command: gst-launch-1.0 -v pulsesrc device=microphone ! audioconvert ! audioresample ! opusenc ! rtpopuspay ! queue max-size-bytes=0 max-size-buffers=0 ! udpsink host=127.0.0.1 port=5002
+    command: "/audio_entry.sh"
 
   fruitnanny:
     image: ivadim/fruitnanny-app
@@ -45,6 +46,7 @@ services:
     privileged: true
     volumes:
       - ./fruitnanny_config.js:/opt/fruitnanny/fruitnanny_config.js
+      - ./bin:/opt/fruitnanny/bin  
     network_mode: "host"
     depends_on:
       - janus
@@ -61,7 +63,6 @@ services:
     volumes:
       - ./configuration/nginx/fruitnanny_http:/etc/nginx/conf.d/default.conf
       - ./configuration/nginx/fruitnanny_https:/etc/nginx/conf.d/default-ssl.conf
-      - ./configuration/nginx/.htpasswd:/etc/nginx/.htpasswd
       - ./configuration/ssl:/etc/fruitnanny-ssl
     ports:
       - "80:80"
