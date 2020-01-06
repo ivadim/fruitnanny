@@ -25,5 +25,5 @@ RUN echo 'APT::Install-Recommends "false";' >/etc/apt/apt.conf.d/00recommends \
     && rm -rf /tmp/*
 
 RUN useradd -rm -d /home/pi -s /bin/bash -g users -G adm,dialout,sudo,audio,video,plugdev,input,netdev -u 1000 pi
-COPY audio_entry.sh /
-COPY audio_stream.sh /
+COPY docker/gstreamer/audio_entry.sh /
+COPY docker/gstreamer/audio_stream.sh /
