@@ -1,4 +1,4 @@
-FROM balenalib/raspberrypi3-debian
+FROM balenalib/raspberry-pi:buster
 
 RUN buildDeps="build-essential git debhelper gobject-introspection gtk-doc-tools libgirepository1.0-dev libglib2.0-dev libgnutls28-dev libgstreamer1.0-dev libgupnp-igd-1.0-dev autotools-dev dh-autoreconf dh-systemd gengetopt libavcodec-dev libavformat-dev libavutil-dev libconfig-dev libcurl4-openssl-dev libcurl4-openssl-dev libjansson-dev liblua5.3-dev libmicrohttpd-dev libnanomsg-dev libogg-dev libopus-dev librabbitmq-dev libre-dev libsofia-sip-ua-dev libsrtp2-dev libssl-dev libsystemd-dev libusrsctp-dev libwebsockets-dev pkg-config rename fakeroot gir1.2-glib-2.0 libgirepository-1.0-1 pandoc brotli doxygen graphviz node-rollup-plugin-replace pigz rollup uglifyjs node-terser uglifyjs.terser" \
     && runDeps="avahi-daemon libnss-mdns" \
