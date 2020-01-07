@@ -1,0 +1,34 @@
+version: '3'
+services:
+  notification-temp:
+    build:
+      context: .
+      dockerfile: docker/notification/Dockerfile
+    restart: always
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - /opt/fruitnanny/bin:/opt/fruitnanny/bin
+    depends_on:
+      - nginx
+      - janus
+      - fruitnanny
+    #command: /bin/bash
+    #tty: true
+    command: python3 /opt/fruitnanny/bin/temperature.py
+
+  notification-motion:
+    image: fruitnanny_notification-temp
+    restart: always
+    network_mode: "host"
+    privileged: true
+    volumes:
+      - /opt/fruitnanny/bin:/opt/fruitnanny/bin
+    depends_on:
+      - nginx
+      - janus
+      - fruitnanny
+      - notification-temp
+    #command: /bin/bash
+    #tty: true
+    command: python3 /opt/fruitnanny/bin/motion.py
