@@ -60,15 +60,21 @@ openssl passwd -apr1 >>  ./configuration/nginx/.htpasswd
 
 `openssl` will prompt for password
 
-### Configure notification function
+### Configure notification function (optional)
 First, create an account on Pushbullet.com.
 
 Then, set up your own configuration by editing the notification configuration file (available here in the fruitnanny folder: bin/configuration).
 
-### Run the system
+* ### Run the system **without** notifications
 ```console
 cd /opt/fruitnanny
 docker-compose up -d
+```
+
+* ### Run the system **with** notifications
+```console
+cd /opt/fruitnanny
+docker-compose -f docker-compose.yml -f docker-compose.notification.yml up -d
 ```
 
 ### Check website
