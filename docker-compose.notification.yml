@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: docker/notification/Dockerfile
-    restart: "no"
+    restart: always
     network_mode: "host"
     privileged: true
     volumes:
@@ -19,7 +19,7 @@ services:
 
   notification-motion:
     image: fruitnanny_notification-temp
-    restart: "no"
+    restart: always
     network_mode: "host"
     privileged: true
     volumes:
